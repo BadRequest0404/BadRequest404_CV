@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /assets/
+Disallow: /BadRequest404_CV/assets/
+
