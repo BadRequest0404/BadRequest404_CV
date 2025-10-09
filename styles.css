@@ -1,0 +1,750 @@
+:root {
+    --matrix-color: #18ff6d;
+    --bg: #0b0d10;
+    --bg-2: #0f131a;
+    --fg: #e8eef6;
+    --muted: #9fb0c6;
+    --brand: #7aa2ff;
+    --accent: #8aeea2;
+    --card: rgba(255, 255, 255, 0.06);
+    --border: rgba(255, 255, 255, 0.14);
+    --ring: rgba(122, 162, 255, .45);
+    --shadow: 0 20px 60px rgba(0, 0, 0, .5);
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --matrix-color: #15d95e;
+        --bg: #f6f7fb;
+        --bg-2: #eef1f7;
+        --fg: #0c1526;
+        --muted: #57627a;
+        --brand: #3458ff;
+        --accent: #1fb879;
+        --card: rgba(0, 0, 0, 0.05);
+        --border: rgba(0, 0, 0, 0.08);
+        --ring: rgba(52, 88, 255, .3);
+        --shadow: 0 18px 50px rgba(28, 35, 50, .18);
+    }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    color: var(--fg);
+    background: radial-gradient(1200px 900px at 80% -10%, rgba(122, 162, 255, .15), transparent 60%),
+    radial-gradient(1000px 700px at 0% 100%, rgba(31, 184, 121, .18), transparent 60%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    display: grid;
+    place-items: center;
+    padding: 48px 20px;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.wrap {
+    width: min(940px, 100%);
+    position: relative;
+    z-index: 2;
+}
+
+.hero {
+    position: relative;
+    backdrop-filter: blur(10px) saturate(120%);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    box-shadow: var(--shadow);
+    overflow: clip;
+    padding: clamp(20px, 5vw, 36px);
+    transition: transform .3s ease;
+    isolation: isolate;
+    margin-bottom: 24px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: clamp(28px, 6vw, 64px);
+    align-items: center;
+}
+
+.avatar {
+    --size: 160px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02));
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .03), 0 10px 30px rgba(0, 0, 0, .25);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    position: relative;
+    animation: photoFloat 3s ease-in-out infinite;
+}
+
+@keyframes photoFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    -webkit-user-drag: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+.ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    pointer-events: none;
+    border: 2px dashed var(--ring);
+    filter: blur(.2px);
+    animation: spin 16s linear infinite;
+    opacity: .7;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+h1 {
+    margin: 6px 0 10px;
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: .3px;
+    line-height: 1.1;
+}
+
+h2 {
+    font-size: clamp(22px, 3vw, 28px);
+    margin-bottom: 20px;
+    letter-spacing: .2px;
+}
+
+.lead {
+    margin: 0;
+    color: var(--muted);
+    max-width: 72ch;
+    text-align: justify;
+    text-wrap: pretty;
+    hyphens: auto;
+    line-height: 1.6;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.tag .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 15%, transparent)
+}
+
+.social {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.social a {
+    --s: 44px;
+    width: var(--s);
+    height: var(--s);
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02));
+    text-decoration: none;
+    transition: all .3s ease;
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, .06);
+    position: relative;
+    overflow: hidden;
+}
+
+.social a::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--social-color);
+    opacity: 0;
+    transition: opacity .3s ease;
+    border-radius: 14px;
+}
+
+.social a:hover::before {
+    opacity: 1;
+}
+
+.social a:hover {
+    transform: translateY(-5px) scale(1.08);
+    border-color: var(--social-color);
+    box-shadow: 0 8px 20px var(--social-shadow);
+}
+
+.social svg {
+    width: 22px;
+    height: 22px;
+    position: relative;
+    z-index: 1;
+    transition: all .3s ease;
+}
+
+.social svg path {
+    fill: var(--fg);
+    transition: fill .3s ease;
+}
+
+.social a:hover svg path {
+    fill: white;
+}
+
+.social a:hover svg {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+}
+
+.social a[href*="linkedin"] {
+    --social-color: #0077B5;
+    --social-shadow: rgba(0, 119, 181, 0.4);
+}
+
+.social a[href*="github"] {
+    --social-color: #333333;
+    --social-shadow: rgba(51, 51, 51, 0.4);
+}
+
+.social a[href*="gitlab"] {
+    --social-color: #FC6D26;
+    --social-shadow: rgba(252, 109, 38, 0.4);
+}
+
+.social a[href*="instagram"] {
+    --social-color: #E4405F;
+    --social-shadow: rgba(228, 64, 95, 0.4);
+}
+
+.cta {
+    margin-top: 26px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: .2px;
+    background: linear-gradient(180deg, color-mix(in oklab, var(--brand) 80%, #fff 0%), color-mix(in oklab, var(--brand) 45%, #000 0%));
+    color: white;
+    box-shadow: 0 8px 24px color-mix(in oklab, var(--brand) 25%, transparent);
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn.cv,
+#copyName.btn {
+    --g: var(--matrix-color);
+    background: linear-gradient(
+            180deg,
+            color-mix(in oklab, var(--g) 92%, #fff 0%),
+            color-mix(in oklab, var(--g) 55%, #000 0%)
+    );
+    color: #0b0d10;
+    border: 1px solid color-mix(in oklab, var(--g) 40%, transparent);
+    box-shadow: 0 8px 24px color-mix(in oklab, var(--g) 28%, transparent);
+}
+
+.btn.cv:hover,
+#copyName.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn.secondary {
+    background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
+    color: var(--fg);
+    border: 1px solid var(--border);
+    box-shadow: none;
+}
+
+/* ========================================
+   SECCIÓN DE CERTIFICACIONES
+   ======================================== */
+.certifications {
+    position: relative;
+    backdrop-filter: blur(10px) saturate(120%);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    box-shadow: var(--shadow);
+    padding: clamp(24px, 5vw, 36px);
+    margin-bottom: 24px;
+}
+
+/* 🎚️ Contenedor con scroll horizontal */
+.cert-scroll-container {
+    position: relative;
+    margin-top: 20px;
+}
+
+.cert-grid {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 10px;
+    /* Personalizar scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: var(--brand) var(--card);
+}
+
+/* Scrollbar para navegadores Webkit (Chrome, Safari, Edge) */
+.cert-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.cert-grid::-webkit-scrollbar-track {
+    background: var(--card);
+    border-radius: 10px;
+}
+
+.cert-grid::-webkit-scrollbar-thumb {
+    background: var(--brand);
+    border-radius: 10px;
+    transition: background .3s ease;
+}
+
+.cert-grid::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklab, var(--brand) 80%, white);
+}
+
+.cert-card {
+    position: relative;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .01));
+    overflow: hidden;
+    transition: transform .3s ease, box-shadow .3s ease;
+    cursor: pointer;
+    /* 📏 Tamaño fijo para scroll horizontal */
+    min-width: 300px;
+    flex-shrink: 0;
+}
+
+.cert-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .3);
+}
+
+/* 🔒 Protección de imágenes de certificaciones */
+.cert-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    -webkit-user-drag: none;
+    user-select: none;
+    pointer-events: none;
+    position: relative;
+}
+
+/* Capa de protección sobre la imagen */
+.cert-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: transparent;
+    pointer-events: auto;
+}
+
+.cert-info {
+    padding: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.cert-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--fg);
+    margin-bottom: 6px;
+}
+
+/* 🎮 Botones de navegación lateral (opcional) */
+.cert-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all .3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.cert-nav-btn:hover {
+    background: var(--brand);
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.cert-nav-btn.left {
+    left: -20px;
+}
+
+.cert-nav-btn.right {
+    right: -20px;
+}
+
+.cert-org {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* Indicador de scroll (pequeñas flechas decorativas) */
+.scroll-indicator {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 10px;
+    opacity: 0.7;
+}
+
+/* Modal para ver certificación */
+.cert-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.cert-modal.active {
+    display: flex;
+}
+
+.cert-modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh;
+    background: var(--card);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid var(--border);
+}
+
+.cert-modal img {
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+    -webkit-user-drag: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+.cert-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s ease;
+}
+
+.cert-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.footer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.toggle {
+    position: fixed;
+    right: 18px;
+    top: 18px;
+    z-index: 100;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02));
+    cursor: pointer;
+    user-select: none;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: -120px;
+    z-index: -1;
+    background: radial-gradient(350px 220px at 15% 15%, color-mix(in oklab, var(--brand) 55%, transparent) 0, transparent 70%),
+    radial-gradient(420px 260px at 90% 50%, color-mix(in oklab, var(--accent) 55%, transparent) 0, transparent 70%);
+    filter: blur(30px);
+    opacity: .4;
+}
+
+.credits {
+    opacity: .8
+}
+
+.hidden {
+    display: none
+}
+
+html.light {
+    --matrix-color: #15d95e;
+    --bg: #f6f7fb;
+    --bg-2: #eef1f7;
+    --fg: #0c1526;
+    --muted: #57627a;
+    --brand: #3458ff;
+    --accent: #1fb879;
+    --card: rgba(0, 0, 0, 0.05);
+    --border: rgba(0, 0, 0, 0.08);
+    --ring: rgba(52, 88, 255, .3);
+    --shadow: 0 18px 50px rgba(28, 35, 50, .18);
+}
+
+@media (max-width: 720px) {
+    body {
+        padding: 28px 14px;
+    }
+
+    .wrap {
+        width: 100%;
+    }
+
+    .hero, .certifications {
+        padding: 20px;
+        border-radius: 22px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .avatar {
+        --size: 140px;
+        margin: 0 auto 12px;
+    }
+
+    h1 {
+        font-size: clamp(26px, 7vw, 34px);
+    }
+
+    .lead {
+        font-size: 0.95rem;
+        line-height: 1.55;
+        text-align: center;
+    }
+
+    .social {
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .social a {
+        --s: 48px;
+    }
+
+    .cta {
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .btn {
+        padding: 11px 16px;
+        font-size: 0.9rem;
+    }
+
+    .tag {
+        justify-content: center;
+    }
+
+    /* Ajustes para certificaciones en móvil */
+    .cert-nav-btn {
+        display: none;
+    }
+
+    .cert-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        overflow-x: visible;
+    }
+
+    .scroll-indicator {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 20px 12px;
+    }
+
+    .hero, .certifications {
+        padding: 18px;
+    }
+
+    .avatar {
+        --size: 120px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .lead {
+        font-size: 0.9rem;
+    }
+
+    .social a {
+        --s: 44px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .cert-grid {
+        grid-template-columns: 1fr;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+}
+
+.btn.disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.placeholder-avatar {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 70px;
+    color: var(--muted);
+    background: linear-gradient(135deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .02));
+}
+
+/* Matrix Rain Effect */
+.matrix-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.35;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.drop {
+    position: absolute;
+    top: -50px;
+    color: var(--matrix-color);
+    font-family: 'Courier New', monospace;
+    font-size: 22px;
+    font-weight: bold;
+    white-space: nowrap;
+    animation: fall linear infinite;
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
