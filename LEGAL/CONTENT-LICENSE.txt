@@ -1,9 +1,0 @@
-Copyright © 2025 Eduardo Cruz García. Todos los derechos reservados.
-
-Excepto donde se indique lo contrario, todo el CONTENIDO de este repositorio y del sitio
-(textos, imágenes, fotografías, CV, certificaciones, logotipos y demás activos dentro de /assets)
-no está licenciado bajo términos abiertos. Queda prohibida su copia, descarga, reproducción,
-redistribución, publicación o modificación sin autorización previa por escrito del titular.
-
-Se permite únicamente la visualización personal dentro del sitio.
-Para permisos, contacto: lalocga@gmail.com
