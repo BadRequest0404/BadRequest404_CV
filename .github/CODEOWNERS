@@ -1,0 +1,13 @@
+# CODEOWNERS (GitHub)
+# Orden importa: la última coincidencia gana.
+
+# Dueño por defecto de todo:
+* @BadRequest0404
+
+# Ejemplos por carpetas/archivos:
+docs/* @BadRequest0404
+app/*  @BadRequest0404
+.github/* @BadRequest0404
+
+# Si más adelante tienes una organización:
+# app/** @tu-org/backend-team
