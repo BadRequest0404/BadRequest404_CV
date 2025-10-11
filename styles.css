@@ -304,6 +304,47 @@ h2 {
 }
 
 /* ========================================
+   🌍 SELECTOR DE IDIOMA
+   ======================================== */
+.lang-switcher {
+    position: fixed;
+    right: 18px;
+    top: 74px;
+    z-index: 100;
+    display: flex;
+    gap: 6px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02));
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 4px;
+    backdrop-filter: blur(10px) saturate(120%);
+}
+
+.lang-btn {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all .3s ease;
+    letter-spacing: .3px;
+}
+
+.lang-btn:hover {
+    background: rgba(255, 255, 255, .05);
+}
+
+.lang-btn.active {
+    background: var(--matrix-color);
+    color: #0b0d10;
+    box-shadow: 0 2px 8px color-mix(in oklab, var(--matrix-color) 30%, transparent);
+}
+
+/* ========================================
    SECCIÓN DE CERTIFICACIONES
    ======================================== */
 .certifications {
@@ -649,6 +690,18 @@ html.light {
 
     .scroll-indicator {
         display: none;
+    }
+
+    /* Selector de idioma en móvil */
+    .lang-switcher {
+        top: 14px;
+        right: 70px;
+        padding: 3px;
+    }
+
+    .lang-btn {
+        padding: 6px 10px;
+        font-size: 12px;
     }
 }
 

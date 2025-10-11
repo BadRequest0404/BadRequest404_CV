@@ -1,5 +1,90 @@
 // ========================================
-// 🎮 NAVEGACIÓN DE CERTIFICACIONES
+// SISTEMA BILINGUE (ESPANOL/INGLES)
+// ========================================
+
+const translations = {
+    es: {
+        available: "Disponible para roles técnicos",
+        description: "Administración de sistemas y soporte técnico. Desarrollo Web y Aplicaciones de Escritorio, Configuración de servidores, Automatización con Python y servicios en Windows/Linux. Diseño de soluciones reproducibles, seguras y escalables.",
+        downloadCV: "Descargar CV (PDF)",
+        downloadCVEN: "Download CV (English)",
+        copyName: "Copiar nombre completo",
+        tiltEffect: "Efecto tilt:",
+        certifications: "🏆 Certificaciones",
+        scrollMore: "← Desliza para ver más →",
+        nameCopied: "Nombre copiado",
+        copyError: "No se pudo copiar",
+        certsProtected: "Las certificaciones están protegidas"
+    },
+    en: {
+        available: "Available for technical roles",
+        description: "Systems administration and technical support. Web Development and Desktop Applications, Server configuration, Automation with Python and Windows/Linux services. Design of reproducible, secure and scalable solutions.",
+        downloadCV: "Descargar CV (Español)",
+        downloadCVEN: "Download CV (English)",
+        copyName: "Copy full name",
+        tiltEffect: "Tilt effect:",
+        certifications: "🏆 Certifications",
+        scrollMore: "← Scroll for more →",
+        nameCopied: "Name copied",
+        copyError: "Could not copy",
+        certsProtected: "Certifications are protected"
+    }
+};
+
+let currentLang = 'es';
+let tiltEnabled = true;
+
+function setLanguage(lang) {
+    currentLang = lang;
+    const t = translations[lang];
+
+    // Actualizar textos
+    document.getElementById('availableTag').textContent = t.available;
+    document.getElementById('description').textContent = t.description;
+    document.getElementById('downloadCVES').textContent = t.downloadCV;
+    document.getElementById('downloadCVEN').textContent = t.downloadCVEN;
+    document.getElementById('copyName').textContent = t.copyName;
+    document.getElementById('certsTitle').textContent = t.certifications;
+    document.getElementById('scrollIndicator').textContent = t.scrollMore;
+
+    // Actualizar boton de tilt
+    const tiltBtn = document.getElementById('tiltToggle');
+    const tiltState = tiltEnabled ? 'ON' : 'OFF';
+    tiltBtn.textContent = `${t.tiltEffect} ${tiltState}`;
+
+    // Actualizar botones de idioma
+    document.getElementById('langES').classList.toggle('active', lang === 'es');
+    document.getElementById('langEN').classList.toggle('active', lang === 'en');
+
+    // Guardar preferencia
+    try {
+        localStorage.setItem('preferredLang', lang);
+    } catch (e) {
+        console.log('LocalStorage no disponible');
+    }
+}
+
+// Cargar idioma guardado o detectar del navegador
+let savedLang = null;
+try {
+    savedLang = localStorage.getItem('preferredLang');
+} catch (e) {
+    console.log('LocalStorage no disponible');
+}
+const browserLang = navigator.language.startsWith('es') ? 'es' : 'en';
+const initialLang = savedLang || browserLang;
+
+// Esperar a que el DOM esté listo antes de inicializar idioma
+document.addEventListener('DOMContentLoaded', () => {
+    setLanguage(initialLang);
+
+    // Event listeners para cambio de idioma
+    document.getElementById('langES').addEventListener('click', () => setLanguage('es'));
+    document.getElementById('langEN').addEventListener('click', () => setLanguage('en'));
+});
+
+// ========================================
+// NAVEGACION DE CERTIFICACIONES
 // ========================================
 
 const certGrid = document.getElementById('certGrid');
@@ -10,7 +95,7 @@ const certScrollRight = document.getElementById('certScrollRight');
 if (certScrollLeft && certScrollRight) {
     certScrollLeft.addEventListener('click', () => {
         certGrid.scrollBy({
-            left: -320, // Ancho de la tarjeta + gap
+            left: -320,
             behavior: 'smooth'
         });
     });
@@ -23,7 +108,7 @@ if (certScrollLeft && certScrollRight) {
     });
 }
 
-// Scroll horizontal con rueda del mouse (opcional pero útil)
+// Scroll horizontal con rueda del mouse
 certGrid.addEventListener('wheel', (e) => {
     if (e.deltaY !== 0) {
         e.preventDefault();
@@ -40,11 +125,7 @@ certGrid.addEventListener('wheel', (e) => {
 
 function createMatrixRain() {
     const container = document.getElementById('matrixBg');
-
-    // 🎨 PERSONALIZACIÓN: Caracteres que van a llover
     const chars = '010101</>{}();';
-
-    // 📏 CONFIGURACIÓN: Cantidad de columnas
     const screenWidth = window.innerWidth;
     const columnWidth = 35;
     const columns = Math.floor(screenWidth / columnWidth);
@@ -79,7 +160,7 @@ window.addEventListener('resize', () => {
 });
 
 // ========================================
-// CONFIGURACIÓN GENERAL
+// CONFIGURACION GENERAL
 // ========================================
 
 // Year
@@ -117,15 +198,14 @@ document.getElementById('copyName').addEventListener('click', async () => {
     const text = 'Eduardo Cruz García';
     try {
         await navigator.clipboard.writeText(text);
-        flash('Nombre copiado');
+        flash(translations[currentLang].nameCopied);
     } catch (e) {
-        flash('No se pudo copiar');
+        flash(translations[currentLang].copyError);
     }
 });
 
 // Tilt effect on card
 const card = document.getElementById('card');
-let tiltEnabled = true;
 
 const map = (n, a, b, c, d) => (n - a) * (d - c) / (b - a) + c;
 
@@ -148,7 +228,7 @@ try {
     const coarse = matchMedia('(pointer: coarse)').matches;
     if (coarse || window.innerWidth < 720) {
         tiltEnabled = false;
-        tiltBtn.textContent = 'Efecto tilt: OFF';
+        tiltBtn.textContent = `${translations[currentLang].tiltEffect} OFF`;
         tiltBtn.classList.add('disabled');
     }
 } catch (_) {
@@ -156,7 +236,8 @@ try {
 
 tiltBtn.addEventListener('click', () => {
     tiltEnabled = !tiltEnabled;
-    tiltBtn.textContent = `Efecto tilt: ${tiltEnabled ? 'ON' : 'OFF'}`;
+    const state = tiltEnabled ? 'ON' : 'OFF';
+    tiltBtn.textContent = `${translations[currentLang].tiltEffect} ${state}`;
     if (!tiltEnabled) {
         card.style.transform = 'none';
     }
@@ -177,15 +258,13 @@ function flash(message) {
 }
 
 // ========================================
-// 🔒 PROTECCIÓN DE CERTIFICACIONES
+// PROTECCION DE CERTIFICACIONES
 // ========================================
 
-// Modal de certificaciones
 const certModal = document.getElementById('certModal');
 const certModalImg = document.getElementById('certModalImg');
 const certClose = document.getElementById('certClose');
 
-// Abrir modal al hacer clic en una certificación
 document.querySelectorAll('.cert-card').forEach(card => {
     card.addEventListener('click', function () {
         const certSrc = this.getAttribute('data-cert');
@@ -194,7 +273,6 @@ document.querySelectorAll('.cert-card').forEach(card => {
     });
 });
 
-// Cerrar modal
 certClose.addEventListener('click', () => {
     certModal.classList.remove('active');
 });
@@ -205,43 +283,34 @@ certModal.addEventListener('click', (e) => {
     }
 });
 
-// Bloquear menú contextual en certificaciones y modal
 document.querySelectorAll('.cert-image, .cert-modal img').forEach(img => {
     img.addEventListener('contextmenu', (e) => e.preventDefault());
     img.setAttribute('draggable', 'false');
 });
 
-// Bloquear clic derecho en las tarjetas de certificaciones
 document.querySelectorAll('.cert-card').forEach(card => {
     card.addEventListener('contextmenu', (e) => e.preventDefault());
 });
 
-// Protección adicional: interceptar intentos de guardar imágenes
 document.addEventListener('keydown', (e) => {
-    // Bloquear Ctrl+S / Cmd+S en modal de certificaciones
     if ((e.ctrlKey || e.metaKey) && e.key === 's') {
         if (certModal.classList.contains('active')) {
             e.preventDefault();
-            flash('Las certificaciones están protegidas');
+            flash(translations[currentLang].certsProtected);
         }
     }
 });
 
-// Bloquear menú contextual global, excepto en el botón de copiar nombre
 document.addEventListener('contextmenu', (e) => {
     if (!e.target.closest('#copyName')) e.preventDefault();
 });
 
-// Forzar que cualquier intento de copiar, ponga tu nombre
 document.addEventListener('copy', (e) => {
-    // No bloquear si están seleccionando texto dentro de certificaciones info
     if (e.target.closest('.cert-info')) return;
-
     e.preventDefault();
     e.clipboardData.setData('text/plain', 'Eduardo Cruz García');
 });
 
-// Proteger foto de perfil
 document.querySelectorAll('.avatar img').forEach(img => {
     img.setAttribute('draggable', 'false');
 });
