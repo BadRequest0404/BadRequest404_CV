@@ -34,7 +34,7 @@
     padding: 0;
 }
 
-html, body {
+html {
     height: 100%;
     overflow-x: hidden;
 }
@@ -45,15 +45,19 @@ body {
     background: radial-gradient(1200px 900px at 80% -10%, rgba(122, 162, 255, .15), transparent 60%),
     radial-gradient(1000px 700px at 0% 100%, rgba(31, 184, 121, .18), transparent 60%),
     linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
-    display: grid;
-    place-items: center;
-    padding: 48px 20px;
     min-height: 100vh;
+    padding: 48px 20px;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .wrap {
-    width: min(940px, 100%);
+    width: 100%;
+    max-width: 940px;
+    margin: 0 auto;
     position: relative;
     z-index: 2;
 }
@@ -303,9 +307,6 @@ h2 {
     box-shadow: none;
 }
 
-/* ========================================
-   🌍 SELECTOR DE IDIOMA
-   ======================================== */
 .lang-switcher {
     position: fixed;
     right: 18px;
@@ -344,9 +345,6 @@ h2 {
     box-shadow: 0 2px 8px color-mix(in oklab, var(--matrix-color) 30%, transparent);
 }
 
-/* ========================================
-   SECCIÓN DE CERTIFICACIONES
-   ======================================== */
 .certifications {
     position: relative;
     backdrop-filter: blur(10px) saturate(120%);
@@ -358,7 +356,6 @@ h2 {
     margin-bottom: 24px;
 }
 
-/* 🎚️ Contenedor con scroll horizontal */
 .cert-scroll-container {
     position: relative;
     margin-top: 20px;
@@ -368,14 +365,14 @@ h2 {
     display: flex;
     gap: 20px;
     overflow-x: auto;
+    overflow-y: hidden;
     scroll-behavior: smooth;
     padding-bottom: 10px;
-    /* Personalizar scrollbar */
     scrollbar-width: thin;
     scrollbar-color: var(--brand) var(--card);
+    -webkit-overflow-scrolling: touch;
 }
 
-/* Scrollbar para navegadores Webkit (Chrome, Safari, Edge) */
 .cert-grid::-webkit-scrollbar {
     height: 8px;
 }
@@ -403,7 +400,6 @@ h2 {
     overflow: hidden;
     transition: transform .3s ease, box-shadow .3s ease;
     cursor: pointer;
-    /* 📏 Tamaño fijo para scroll horizontal */
     min-width: 300px;
     flex-shrink: 0;
 }
@@ -413,7 +409,6 @@ h2 {
     box-shadow: 0 12px 30px rgba(0, 0, 0, .3);
 }
 
-/* 🔒 Protección de imágenes de certificaciones */
 .cert-image {
     width: 100%;
     height: 200px;
@@ -425,7 +420,6 @@ h2 {
     position: relative;
 }
 
-/* Capa de protección sobre la imagen */
 .cert-card::after {
     content: '';
     position: absolute;
@@ -450,7 +444,6 @@ h2 {
     margin-bottom: 6px;
 }
 
-/* 🎮 Botones de navegación lateral (opcional) */
 .cert-nav-btn {
     position: absolute;
     top: 50%;
@@ -490,7 +483,6 @@ h2 {
     color: var(--muted);
 }
 
-/* Indicador de scroll (pequeñas flechas decorativas) */
 .scroll-indicator {
     text-align: center;
     color: var(--muted);
@@ -499,7 +491,6 @@ h2 {
     opacity: 0.7;
 }
 
-/* Modal para ver certificación */
 .cert-modal {
     display: none;
     position: fixed;
@@ -619,131 +610,6 @@ html.light {
     --shadow: 0 18px 50px rgba(28, 35, 50, .18);
 }
 
-@media (max-width: 720px) {
-    body {
-        padding: 28px 14px;
-    }
-
-    .wrap {
-        width: 100%;
-    }
-
-    .hero, .certifications {
-        padding: 20px;
-        border-radius: 22px;
-    }
-
-    .grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        text-align: center;
-    }
-
-    .avatar {
-        --size: 140px;
-        margin: 0 auto 12px;
-    }
-
-    h1 {
-        font-size: clamp(26px, 7vw, 34px);
-    }
-
-    .lead {
-        font-size: 0.95rem;
-        line-height: 1.55;
-        text-align: center;
-    }
-
-    .social {
-        justify-content: center;
-        gap: 12px;
-    }
-
-    .social a {
-        --s: 48px;
-    }
-
-    .cta {
-        gap: 10px;
-        justify-content: center;
-    }
-
-    .btn {
-        padding: 11px 16px;
-        font-size: 0.9rem;
-    }
-
-    .tag {
-        justify-content: center;
-    }
-
-    /* Ajustes para certificaciones en móvil */
-    .cert-nav-btn {
-        display: none;
-    }
-
-    .cert-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        overflow-x: visible;
-    }
-
-    .scroll-indicator {
-        display: none;
-    }
-
-    /* Selector de idioma en móvil */
-    .lang-switcher {
-        top: 14px;
-        right: 70px;
-        padding: 3px;
-    }
-
-    .lang-btn {
-        padding: 6px 10px;
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 480px) {
-    body {
-        padding: 20px 12px;
-    }
-
-    .hero, .certifications {
-        padding: 18px;
-    }
-
-    .avatar {
-        --size: 120px;
-    }
-
-    h1 {
-        font-size: 24px;
-    }
-
-    .lead {
-        font-size: 0.9rem;
-    }
-
-    .social a {
-        --s: 44px;
-    }
-
-    .btn {
-        width: 100%;
-        padding: 12px;
-    }
-
-    .cert-grid {
-        grid-template-columns: 1fr;
-    }
-
-    h2 {
-        font-size: 22px;
-    }
-}
-
 .btn.disabled {
     opacity: .6;
     cursor: not-allowed;
@@ -760,7 +626,6 @@ html.light {
     background: linear-gradient(135deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .02));
 }
 
-/* Matrix Rain Effect */
 .matrix-bg {
     position: fixed;
     top: 0;
@@ -799,5 +664,190 @@ html.light {
     100% {
         transform: translateY(100vh);
         opacity: 0;
+    }
+}
+
+/* ========================================
+   📱 MEDIA QUERIES - RESPONSIVE UNIFICADO
+   ======================================== */
+
+/* 💻 Desktop Mediano (hasta 1200px) */
+@media (max-width: 1200px) {
+    .wrap {
+        max-width: 900px;
+    }
+}
+
+/* 📱 Tablets Grande (hasta 1024px) */
+@media (max-width: 1024px) {
+    body {
+        padding: 40px 24px;
+    }
+
+    .wrap {
+        max-width: 100%;
+        padding: 0 8px;
+    }
+
+    .cert-nav-btn {
+        display: none;
+    }
+}
+
+/* 📱 Tablets (hasta 768px) */
+@media (max-width: 768px) {
+    body {
+        padding: 32px 20px;
+    }
+
+    .wrap {
+        padding: 0;
+    }
+
+    .hero, .certifications {
+        padding: 24px;
+        border-radius: 24px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        text-align: center;
+    }
+
+    .avatar {
+        --size: 140px;
+        margin: 0 auto 16px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .lead {
+        font-size: 0.95rem;
+        text-align: center;
+    }
+
+    .social {
+        justify-content: center;
+    }
+
+    .social a {
+        --s: 48px;
+    }
+
+    .cta {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .tag {
+        justify-content: center;
+    }
+
+    .cert-card {
+        min-width: 280px;
+    }
+
+    .scroll-indicator {
+        display: block;
+    }
+
+    .lang-switcher {
+        right: 70px;
+        top: 14px;
+        padding: 3px;
+    }
+
+    .lang-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}
+
+/* 📱 Móviles (hasta 480px) */
+@media (max-width: 480px) {
+    body {
+        padding: 24px 12px;
+    }
+
+    .hero, .certifications {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .avatar {
+        --size: 120px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    .lead {
+        font-size: 0.9rem;
+    }
+
+    .social a {
+        --s: 44px;
+    }
+
+    .social svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .btn {
+        padding: 11px 14px;
+        font-size: 0.9rem;
+    }
+
+    .cert-card {
+        min-width: 260px;
+    }
+
+    .cert-image {
+        height: 180px;
+    }
+}
+
+/* 📱 Móviles Pequeños (hasta 360px) */
+@media (max-width: 360px) {
+    body {
+        padding: 20px 8px;
+    }
+
+    .hero, .certifications {
+        padding: 16px;
+    }
+
+    .avatar {
+        --size: 100px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .cert-card {
+        min-width: 240px;
+    }
+
+    .cert-image {
+        height: 160px;
     }
 }
